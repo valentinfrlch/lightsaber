@@ -13,10 +13,11 @@ root.title('Lightsaber')
 root.grid()
 root.grid_rowconfigure(0, weight=1)
 root.grid_columnconfigure(0, weight=1)
-text_box = tk.Entry(root)
+text_box = ttk.Entry(root)
 # make the text box fill the window
 # add text
-tk.Label(root, text="Enter a song name to analyze:").grid(row=0, column=0)
+label = ttk.Label(root, text="Enter a song name to analyze:")
+label.grid(row=0, column=0)
 text_box.insert(0, 'Enter your search query here...')
 text_box.grid(column=0, row=1, columnspan=2, sticky='we', padx=10, pady=20)
 
@@ -29,8 +30,11 @@ pb = ttk.Progressbar(
 # place the progressbar
 pb.grid(column=0, row=2, columnspan=2, padx=10, pady=20)
   
+  
+  
+  
 #---------------------------------------
-# handle the events:
+# --------------backend-----------------
 #---------------------------------------
 
 def on_click(event):
@@ -55,6 +59,8 @@ def check(t, mode):
             root.after(100, check, s, "analyze")
         elif mode == "analyze":
             from analyzer import tempo, beats
+            pb.stop()
+            pb.grid_remove()
             print(tempo, beats)
 
 def start():
@@ -63,6 +69,8 @@ def start():
     query = text_box.get()
     # run in a separate thread
     t = threading.Thread(target=dl.download, args=(query,))
+    # change the label text
+    label.config(text="Downloading " + query)
     t.start()
     pb.start()
     # check periodically if the thread is still alive
@@ -71,7 +79,8 @@ def start():
 clicked = text_box.bind('<Button-1>', on_click)
 
 # start button
-start_button = tk.Button(root, text="Start", command=lambda: start())
+
+start_button = ttk.Button(root, text="Start", command=start)
 start_button.grid(column=0, row=2, padx=10, pady=10, sticky=tk.E)
 
 
