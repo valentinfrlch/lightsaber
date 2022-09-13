@@ -21,4 +21,7 @@ def get_beats(file_path):
     global tempo
     global beats
     tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
+    # convert all beats from frames to seconds
+    beats = librosa.frames_to_time(beats, sr=sr).tolist()
     tempo = 60/tempo
+    return tempo, beats

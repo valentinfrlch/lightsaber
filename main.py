@@ -1,6 +1,8 @@
 # show a GUI windows with text input and a button
+from imp import cache_from_source
 import downloader as dl
 import analyzer as ay
+import player as pl
 import threading
 
 import tkinter as tk
@@ -52,16 +54,16 @@ def check(t, mode):
         pb.stop()
         if mode == "download":
             from downloader import cache_location
-            print(cache_location)
             s = threading.Thread(target=ay.get_beats, args=(cache_location,))
             s.start()
             pb.start()
             root.after(100, check, s, "analyze")
         elif mode == "analyze":
             from analyzer import tempo, beats
+            #from downloader import cache_location
             pb.stop()
             pb.grid_remove()
-            print(tempo, beats)
+            pl.main(cache_location, beats)
 
 def start():
     query = text_box.get()

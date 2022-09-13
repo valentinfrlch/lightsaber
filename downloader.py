@@ -2,6 +2,7 @@
 import youtube_dl
 import youtube_search
 import analyzer as ay
+import helpers as hp
 
 
 def download(query):
@@ -23,3 +24,4 @@ def download(query):
     # return file path
     global cache_location
     cache_location = "cache/" + results[0]["title"] + ".wav"
+    #hp.get_image(query)
