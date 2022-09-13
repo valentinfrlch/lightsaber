@@ -1,0 +1,4 @@
+youtube_dl
+librosa
+ffmpeg-python
+youtube_search

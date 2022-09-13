@@ -1,7 +1,6 @@
 # analyze beats from mp3 files
 
 import librosa
-import os
 import ffmpeg
 
 
@@ -13,6 +12,8 @@ def prepare_audio(file_path):
     return "cache/test.wav"
 
 def get_beats(file_path):
+    if file_path.endswith(".mp3"):
+        file_path = prepare_audio(file_path)
     # convert mp3 to wav
     y, sr = librosa.load(file_path, mono=True)
     # get beats
@@ -21,5 +22,4 @@ def get_beats(file_path):
     return tempo, beats
 
 
-path = "C:\\Users\\valen\Documents\\dev\\lightsaber\\test.mp3"
-get_beats(prepare_audio(path))
+print(get_beats("cache/test.wav"))
