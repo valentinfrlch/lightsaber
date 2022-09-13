@@ -48,17 +48,7 @@ def on_click(event):
 def player_interface(file_path):
     # load visualizer
     path = h.visualizer(file_path)
-    # add the image to the window
-    img = tk.PhotoImage(file=path)
-    img_label = tk.Label(root, image=img)
-    img_label.image = img
-    img_label.grid(column=0, row=3, columnspan=2, padx=10, pady=20)
-    # add the play button
-    play_button = ttk.Button(root, text="Play", command=lambda: pl.play(file_path))
-    play_button.grid(column=0, row=4, padx=10, pady=20)
-    # add the stop button
-    stop_button = ttk.Button(root, text="Stop", command=lambda: pl.stop())
-    stop_button.grid(column=1, row=4, padx=10, pady=20)
+    
     
 
 

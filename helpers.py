@@ -48,6 +48,3 @@ def visualizer(file_path):
     plt.savefig("cache/visualizer.png")
     plt.close()
     return "cache/visualizer.png"
-    
-    
-visualizer("cache/test.wav")
