@@ -20,6 +20,3 @@ def get_beats(file_path):
     tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
     tempo = 60/tempo
     return tempo, beats
-
-
-print(get_beats("cache/test.wav"))
