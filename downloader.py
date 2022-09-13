@@ -1,6 +1,8 @@
 # download youtube videos as mp3
 import youtube_dl
 import youtube_search
+import analyzer as ay
+
 
 def download(query):
     # download to cache folder
@@ -19,4 +21,5 @@ def download(query):
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
     # return file path
-    return "cache/" + results[0]["title"] + ".wav"
+    global cache_location
+    cache_location = "cache/" + results[0]["title"] + ".wav"
