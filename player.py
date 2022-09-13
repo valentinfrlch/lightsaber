@@ -27,7 +27,3 @@ def interpret_beats(beats):
         beat_diff = beats[beats.index(beat) + 1] - beat
         time.sleep(beat_diff)
         os.system("cls")
-      
-      
-tempo, beats = ay.get_beats("cache/test.wav")
-main("cache/test.wav", beats)

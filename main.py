@@ -1,8 +1,8 @@
 # show a GUI windows with text input and a button
-from imp import cache_from_source
 import downloader as dl
 import analyzer as ay
 import player as pl
+import helpers as h
 import threading
 
 import tkinter as tk
@@ -44,6 +44,22 @@ def on_click(event):
         text_box.delete(0, "end")
         text_box.insert(0, '')
         text_box.config(fg = 'black')
+        
+def player_interface(file_path):
+    # load visualizer
+    path = h.visualizer(file_path)
+    # add the image to the window
+    img = tk.PhotoImage(file=path)
+    img_label = tk.Label(root, image=img)
+    img_label.image = img
+    img_label.grid(column=0, row=3, columnspan=2, padx=10, pady=20)
+    # add the play button
+    play_button = ttk.Button(root, text="Play", command=lambda: pl.play(file_path))
+    play_button.grid(column=0, row=4, padx=10, pady=20)
+    # add the stop button
+    stop_button = ttk.Button(root, text="Stop", command=lambda: pl.stop())
+    stop_button.grid(column=1, row=4, padx=10, pady=20)
+    
 
 
 def check(t, mode):
@@ -59,11 +75,14 @@ def check(t, mode):
             pb.start()
             root.after(100, check, s, "analyze")
         elif mode == "analyze":
-            from analyzer import tempo, beats
-            #from downloader import cache_location
+            from analyzer import beats
+            from downloader import cache_location
             pb.stop()
             pb.grid_remove()
-            pl.main(cache_location, beats)
+            player = threading.Thread(target=pl.main, args=(cache_location, beats))
+            player.start()
+            player_interface(cache_location)
+            
 
 def start():
     query = text_box.get()
