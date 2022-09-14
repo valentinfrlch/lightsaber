@@ -38,7 +38,7 @@ def compare(y, sr):
     best_score = 0
     for sound in sounds:
         # get spectogram of sound
-        y, sr = librosa.load(sound, mono=True)
+        y, sr = librosa.load("sounds/" + sound, mono=True)
         sound_spec = librosa.feature.melspectrogram(y=y, sr=sr)
         # compare spectograms
         score = np.sum(np.abs(spec - sound_spec))
@@ -47,16 +47,18 @@ def compare(y, sr):
             best_score = score
             best_sound = sound
     # return the best sound
-    return best_sound
+    return best_sound.replace(".wav", "")
 
 
 
 def analyze_beats(beats, tempo, file_path):
+    beat_types = []
     for beat in beats:
         # get a 0.5 second audio snippet from the audio file
         y, sr = librosa.load(file_path, offset=beat, duration=tempo)
         beat_type = compare(y, sr)
-    
+        beat_types.append(beat_type)
+    return beat_types
 
 def get_beats(file_path):
     if file_path.endswith(".mp3"):
@@ -70,4 +72,5 @@ def get_beats(file_path):
     # convert all beats from frames to seconds
     beats = librosa.frames_to_time(beats, sr=sr).tolist()
     tempo = 60/tempo
+    beat_types = analyze_beats(beats, tempo, file_path)
     return tempo, beats
